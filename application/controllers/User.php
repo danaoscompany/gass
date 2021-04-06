@@ -1064,10 +1064,9 @@ FROM videos HAVING distance < 25 ORDER BY distance;')->result_array();
     public function send_suggestion() {
     	$judul = $this->input->post('judul');
     	$isi = $this->input->post('isi');
-    	$asalPelapor = $this->input->post('asal_pelapor');
     	$instansiTujuan = $this->input->post('instansi_tujuan');
     	$kategori = $this->input->post('kategori');
-    	$sql = "INSERT INTO `reports` (`type`, `judul`, `isi`, `instansi_tujuan`, `kategori`, `asal_pelapor`) VALUES ('saran', '" . $judul . "', '" . $isi . "', '" . $instansiTujuan . "', '" . $kategori . "', '" . $asalPelapor . "')";
+    	$sql = "INSERT INTO `reports` (`type`, `judul`, `isi`, `instansi_tujuan`, `kategori`, `asal_pelapor`) VALUES ('saran', '" . $judul . "', '" . $isi . "', '" . $instansiTujuan . "', '" . $kategori . "')";
     	$this->db->query($sql);
     	$id = $this->db->insert_id();
     	FCM::send_message('/topics/suggestion', 1, 1, 'Ada saran baru yang dikirimkan pengguna', 'Klik untuk cek', array(
