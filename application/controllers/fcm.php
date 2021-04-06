@@ -4,8 +4,10 @@ class FCM extends CI_Controller {
 
 	static public function sendPushNotification($title, $body, $data, $token) {
 	    $url = "https://fcm.googleapis.com/fcm/send";
-	    $serverKey = 'AAAANAqFItM:APA91bHewHKRDRZpIeHnpAKMsoltCSxRuTftYweqzkKyIBkl-XVXHX6DRCSC5ju93JASPLhBHokxONsxTiwTTEM1hTbyCfcXCnhvqtSRET4xJugKvjXcXFphlKEHsUcXX3OkveVu3d9m';
+	    $serverKey = 'AAAA5ZpLvVo:APA91bF3ebfiy61PEdoGnQ5buQtcNWoXtI4b6_Xos4aiTzlODsScXvyYxpOz7BdaV7yC1qf69Ig1XmSlyMxtbASwtPi70byr4phe6NDuMiFSBr62aIij0kPqCY_foIzsH-E50qgNYkCb';
 	    $notification = array('title' => $title, 'body' => $body, 'sound' => 'default', 'badge' => '1');
+	    $data['title'] = $title;
+	    $data['body'] = $body;
 	    $arrayToSend = array('to' => $token, 'notification' => $notification, 'priority'=>'high', 'data' => $data);
 	    $json = json_encode($arrayToSend);
 	    $headers = array();
@@ -24,6 +26,7 @@ class FCM extends CI_Controller {
 	    	die('FCM Send Error: ' . curl_error($ch));
 	    }
 	    curl_close($ch);
+	    echo $response;
 	}
 	
 	static public function send_message($token, $notificationType, $showNotification, $title, $body, $data) {
@@ -34,7 +37,7 @@ class FCM extends CI_Controller {
 
 	static public function sendPushNotificationWithColor($title, $body, $color, $data, $token) {
 	    $url = "https://fcm.googleapis.com/fcm/send";
-	    $serverKey = 'AAAANAqFItM:APA91bHewHKRDRZpIeHnpAKMsoltCSxRuTftYweqzkKyIBkl-XVXHX6DRCSC5ju93JASPLhBHokxONsxTiwTTEM1hTbyCfcXCnhvqtSRET4xJugKvjXcXFphlKEHsUcXX3OkveVu3d9m';
+	    $serverKey = 'AAAA5ZpLvVo:APA91bF3ebfiy61PEdoGnQ5buQtcNWoXtI4b6_Xos4aiTzlODsScXvyYxpOz7BdaV7yC1qf69Ig1XmSlyMxtbASwtPi70byr4phe6NDuMiFSBr62aIij0kPqCY_foIzsH-E50qgNYkCb';
 	    $notification = array('title' => $title, 'body' => $body, 'color' => $color, 'sound' => 'default', 'badge' => '1');
 	    $arrayToSend = array('to' => $token, 'notification' => $notification, 'priority'=>'high', 'data' => $data);
 	    $json = json_encode($arrayToSend);
@@ -64,7 +67,7 @@ class FCM extends CI_Controller {
 
 	static public function sendPushNotificationWithoutNotification($data, $token) {
 	    $url = "https://fcm.googleapis.com/fcm/send";
-	    $serverKey = 'AAAANAqFItM:APA91bHewHKRDRZpIeHnpAKMsoltCSxRuTftYweqzkKyIBkl-XVXHX6DRCSC5ju93JASPLhBHokxONsxTiwTTEM1hTbyCfcXCnhvqtSRET4xJugKvjXcXFphlKEHsUcXX3OkveVu3d9m';
+	    $serverKey = 'AAAA5ZpLvVo:APA91bF3ebfiy61PEdoGnQ5buQtcNWoXtI4b6_Xos4aiTzlODsScXvyYxpOz7BdaV7yC1qf69Ig1XmSlyMxtbASwtPi70byr4phe6NDuMiFSBr62aIij0kPqCY_foIzsH-E50qgNYkCb';
 	    $arrayToSend = array('to' => $token, 'priority'=>'high', 'data' => $data);
 	    $json = json_encode($arrayToSend);
 	    $headers = array();

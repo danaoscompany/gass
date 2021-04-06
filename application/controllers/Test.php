@@ -14,4 +14,8 @@ class Test extends CI_Controller {
 	public function a() {
 		echo base_url();
 	}
+	
+	public function fcm() {
+		FCM::send_message("fS1pdtDzQ6Sf-B8m9pc-_C:APA91bFGXlSCGKcZpVxkzyAnfPQT5Q5lImQ96r4-Ye0K_Li0nnj3vZQVvweT_WPjq7-yvqpCwD1k6S3V-zLAiFEYo1rMxirxOVrYvG838Rws6EznOqaIhVzTM1fdn7J0fSKYdXEe4JSp", 1, 1, "Judul", "Isi", array());
+	}
 }
