@@ -1074,5 +1074,15 @@ FROM videos HAVING distance < 25 ORDER BY distance;')->result_array();
     	));
     	echo $sql;
     }
+    
+    public function get_report_by_id() {
+    	$id = intval($this->input->post('id'));
+    	echo json_encode($this->db->query("SELECT * FROM `reports` WHERE `id`=" . $id)->row_array());
+    }
+    
+    public function delete_report() {
+    	$id = intval($this->input->post('id'));
+    	$this->db->query("DELETE FROM `reports` WHERE `id`=" . $id);
+    }
 }
 
