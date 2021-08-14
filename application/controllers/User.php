@@ -893,11 +893,14 @@ FROM videos HAVING distance < 25 ORDER BY distance;')->result_array();
             ->result_array();
         for ($i = 0;$i < sizeof($messages);$i++)
         {
-            $messages[$i]['name'] = $this
+        	$user = $this
                 ->db
                 ->get_where('users', array(
                 'id' => intval($messages[$i]['sender_id'])
-            ))->row_array() ['name'];
+            ))->row_array();
+            if ($user != NULL) {
+	            $messages[$i]['name'] = $user['name'];
+            }
         }
         echo json_encode($messages);
     }
@@ -1083,6 +1086,17 @@ FROM videos HAVING distance < 25 ORDER BY distance;')->result_array();
     public function delete_report() {
     	$id = intval($this->input->post('id'));
     	$this->db->query("DELETE FROM `reports` WHERE `id`=" . $id);
+    }
+    
+    public function get_penpas() {
+    	$penpas = $this->db->query("SELECT * FROM `penpas` ORDER BY `title`")->result_array();
+    	echo json_encode($penpas);
+    }
+    
+    public function get_penpas_by_id() {
+    	$id = intval($this->input->post('id'));
+    	$penpas = $this->db->query("SELECT * FROM `penpas` WHERE `id`=" . $id)->row_array();
+    	echo json_encode($penpas);
     }
 }
 

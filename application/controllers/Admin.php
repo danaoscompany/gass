@@ -377,4 +377,56 @@ class Admin extends CI_Controller {
     	$id = $this->input->post('id');
     	echo json_encode($this->db->query("SELECT * FROM `websites` WHERE `id`=" . $id)->row_array());
     }
+    
+    public function add_penpas() {
+    	$title = $this->input->post('title');
+    	$config = array(
+			'upload_path' => './userdata/',
+			'allowed_types' => "*",
+			'overwrite' => TRUE,
+			'file_name' => Util::generateUUIDv4()
+		);
+		$this->load->library('upload', $config);
+		if ($this->upload->do_upload('file')) {
+	    	$this->db->insert('penpas', array(
+	    		'title' => $title,
+	    		'path' => $this->upload->data()['file_name']
+	    	));
+    	}
+    }
+    
+    public function update_penpas() {
+    	$id = intval($this->input->post('id'));
+    	$title = $this->input->post('title');
+    	$documentChanged = intval($this->input->post('document_changed'));
+    	if ($documentChanged == 0) {
+    		$this->db->where('id', $id);
+		    $this->db->update('penpas', array(
+		    	'title' => $title
+		    ));
+    	} else if ($documentChanged == 1) {
+	    	$config = array(
+				'upload_path' => './userdata/',
+				'allowed_types' => "*",
+				'overwrite' => TRUE,
+				'file_name' => Util::generateUUIDv4()
+			);
+			$this->load->library('upload', $config);
+			if ($this->upload->do_upload('file')) {
+				$this->db->where('id', $id);
+		    	$this->db->update('penpas', array(
+		    		'title' => $title,
+		    		'path' => $this->upload->data()['file_name']
+		    	));
+		    	echo "UPDATE `penpas` SET `title`='" . $title . "', `path`='" . $this->upload->data()['file_name'] . "' WHERE `id`=" . $id;
+	    	} else {
+	    		echo json_encode($this->upload->display_errors());
+	    	}
+    	}
+    }
+    
+    public function delete_penpas() {
+    	$id = $this->input->post('id');
+    	$this->db->query("DELETE FROM `penpas` WHERE `id`=" . $id);
+    }
 }
